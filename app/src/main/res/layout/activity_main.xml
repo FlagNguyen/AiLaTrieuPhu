@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@android:style/Theme.DeviceDefault.Panel"
+    tools:context=".MainActivity"
+    android:background="@drawable/bg_normal">
+
+    <LinearLayout
+        android:id="@+id/helper"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="false"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentLeft="false">
+
+        <!--ImageButton gọi điện cho người thân-->
+        <ImageButton
+            android:id="@+id/help1"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/help1"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <!--ImageButton hỏi ý kiến khán giả-->
+        <ImageButton
+            android:id="@+id/help2"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/help2"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <!--ImageButton 50/50-->
+        <ImageButton
+            android:id="@+id/help3"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/help3"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <!--ImageButton đổi câu hỏi-->
+        <ImageButton
+            android:id="@+id/help4"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/help4"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </LinearLayout>
+
+    <!--Logo Ai là triệu phú-->
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/logo"/>
+
+    <!--Layout chứa giao diện câu hỏi và các đáp án-->
+    <LinearLayout
+        android:id="@+id/question_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/helper"
+        android:gravity="center">
+
+        <!--Layout chứa câu hỏi-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="260dp">
+
+            <!--TextView Hiển thị nội dung câu hỏi-->
+            <TextView
+                android:id="@+id/tv_question"
+                android:layout_width="300dp"
+                android:layout_height="160dp"
+                android:text="Câu hỏi ở đây"
+                android:textColor="#fff"
+                android:typeface="serif"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:singleLine="false"
+                android:gravity="fill"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border_blue"/>
+
+            <!--TextView Hiển thị số thứ tự câu hỏi:-->
+            <TextView
+                android:id="@+id/tv_question_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:textSize="20dp"
+                android:text="Câu hỏi số x:"
+                android:layout_marginTop="55dp"
+                android:layout_marginLeft="45dp"/>
+
+            <!--TextView Hiển thị thời gian đếm ngược-->
+            <TextView
+                android:id="@+id/tv_timer"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom|center"
+                android:text="0"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:textColor="#e8821e"
+                android:gravity="center"
+                android:layout_marginBottom="22dp"
+                android:background="@drawable/timer"/>
+
+        </FrameLayout>
+
+        <!--Button A-->
+        <Button
+            android:id="@+id/btnA"
+            android:layout_width="255dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/a"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:typeface="serif"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        <!--Button B-->
+        <Button
+            android:id="@+id/btnB"
+            android:layout_width="255dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/b"
+            android:textColor="#fff"
+
+            android:textStyle="bold"
+            android:typeface="serif"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+        <!--Button C-->
+        <Button
+            android:id="@+id/btnC"
+            android:layout_width="255dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/c"
+            android:textColor="#fff"
+
+            android:textStyle="bold"
+            android:typeface="serif"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+        <!--Button D-->
+        <Button
+            android:id="@+id/btnD"
+            android:layout_width="255dp"
+            android:layout_height="45dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/d"
+            android:textColor="#fff"
+
+            android:textStyle="bold"
+            android:typeface="serif"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    </LinearLayout>
+
+    <!--Rèm bên trái-->
+    <ImageView
+        android:id="@+id/left_curtain"
+        android:layout_width="110dp"
+        android:layout_height="625dp"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/curtain_left"
+        android:layout_alignParentLeft="true" />
+
+    <!--Rèm bên phải-->
+    <ImageView
+        android:id="@+id/right_curtain"
+        android:layout_width="110dp"
+        android:layout_height="620dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/curtain_right"
+        android:layout_alignParentRight="true" />
+
+    <!--Layout Bảng điểm-->
+    <FrameLayout
+        android:id="@+id/score_board"
+        android:layout_width="170dp"
+        android:layout_height="500dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        android:layout_alignParentRight="true">
+
+        <!--Hình cột mốc-->
+        <ImageView
+            android:layout_width="170dp"
+            android:layout_height="500dp"
+            android:background="@drawable/bg_milestone"/>
+
+        <!--Hình điểm 2.000-->
+        <ImageView
+            android:id="@+id/level1"
+            android:layout_width="138dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="330dp"
+            android:background="@drawable/mile_1"
+            android:layout_marginLeft="14dp" />
+
+        <!--Hình điểm 22.000.000-->
+        <ImageView
+            android:id="@+id/level2"
+            android:layout_width="138dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="174dp"
+            android:background="@drawable/mile_2"
+            android:layout_marginLeft="14dp" />
+
+        <!--Hình điểm 150.000.000-->
+        <ImageView
+            android:id="@+id/level3"
+            android:layout_width="138dp"
+            android:layout_height="29dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/mile_3"
+            android:layout_marginLeft="14dp" />
+    </FrameLayout>
+
+    <!--Hình dùng làm hiệu ứng mờ màn hình khi kết thúc, mặc định bị ẩn-->
+    <ImageView
+        android:id="@+id/blur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_blur"
+        android:visibility="invisible" />
+
+</RelativeLayout>
