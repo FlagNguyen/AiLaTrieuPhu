@@ -79,4 +79,9 @@ public class MediaManager {
         backgroundMusic.setLooping(true);
         backgroundMusic.start();
     }
+
+    public void releaseMedia() {
+        sound.release();
+        backgroundMusic.release();
+    }
 }
