@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/border_purple"
+    android:layout_gravity="center_horizontal"
+    style="@style/D1NoTitleDim"
+    >
+
+    <TextView
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:text="Xin chúc mừng!                            Bạn là người chiến thắng"
+        android:textAlignment="center"
+        android:textColor="#ffff24"
+        android:layout_marginTop="150dp"
+        android:textSize="20dp"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:id="@+id/tvTitle"/>
+
+    <TextView
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:text="150.000.000"
+        android:textAlignment="center"
+        android:textColor="#bc2316"
+        android:layout_marginTop="200dp"
+        android:textSize="30dp"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:id="@+id/tvMoney"/>
+
+    <TextView
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Cám ơn bạn đã chơi game. Chúc bạn luôn vui vẻ và thành công trong cuộc sống"
+        android:textColor="#383838"
+        android:textStyle="bold"
+        android:typeface="serif"
+        android:gravity="center"
+        android:textSize="12dp"
+        android:id="@+id/tvMain"/>
+
+    <ImageButton
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:id="@+id/btnOk"
+        android:background="@drawable/ok_select"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="400dp"/>
+
+</FrameLayout>

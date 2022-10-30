@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer, media15;
 
     // Player current question
-    int currentPosition = 1;
+    public int currentPosition = 1;
     // Question's position in DB
     int questionId;
 
@@ -38,5 +38,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    public void freeHeapMemory() {
+
     }
 }
