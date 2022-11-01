@@ -44,8 +44,8 @@ public class FinishDialog extends Dialog implements View.OnClickListener {
         layout = (FrameLayout) findViewById(R.id.layout);
         layout.setOnClickListener(this);
 
-        tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvMoney = (TextView) findViewById(R.id.tvMoney);
+        tvTitle = (TextView) findViewById(R.id.tv_title);
+        tvMoney = (TextView) findViewById(R.id.tv_money);
         tvMoney.startAnimation(animation);
 
         int successNumber = ((MainActivity) activity).currentPosition;

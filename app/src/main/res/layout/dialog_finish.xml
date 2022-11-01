@@ -21,7 +21,7 @@
         android:layout_gravity="center_horizontal"
         android:textStyle="bold"
         android:typeface="serif"
-        android:id="@+id/tvTitle"/>
+        android:id="@+id/tv_title"/>
 
     <TextView
         android:layout_width="260dp"
@@ -34,7 +34,7 @@
         android:layout_gravity="center_horizontal"
         android:textStyle="bold"
         android:typeface="serif"
-        android:id="@+id/tvMoney"/>
+        android:id="@+id/tv_money"/>
 
     <TextView
         android:layout_width="220dp"
