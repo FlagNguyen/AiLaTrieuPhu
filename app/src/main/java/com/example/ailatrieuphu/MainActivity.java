@@ -3,6 +3,7 @@ package com.example.ailatrieuphu;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -15,6 +16,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.ailatrieuphu.function.end_game.FinishDialog;
 import com.example.ailatrieuphu.function.helper.AskingDialog;
@@ -56,7 +59,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public Animation animation, animation1;
     public Handler handler = new Handler();
 
-    // List question's orandomer in DB which is chosen
+    // List question's randomer in DB which is chosen
     public ArrayList<Integer> passedList;
     // List answers
     public ArrayList<String> answerDataList;
@@ -69,6 +72,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     // Runnable: pre-load question and animations
     Runnable runnableMain = new Runnable() {
+        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void run() {
             isDropAnswer = false;
@@ -131,7 +135,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     };
 
-    //Chạy ngầm: hiệu ứng bảng điểm
+    //Runnable: scoreBoard animation
     Runnable runnableAnim = new Runnable() {
         @Override
         public void run() {
@@ -151,7 +155,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                         level1.clearAnimation();
                         level2.clearAnimation();
                         level3.startAnimation(animation1);
-                        media15 = mediaPlayer.create(getApplicationContext(), R.raw.ques_no15);
+                        media15 = MediaPlayer.create(getApplicationContext(), R.raw.ques_no15);
                         media15.start();
                         break;
                     default:
@@ -165,6 +169,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     };
 
+    /**
+     * Set up score board animation
+     */
     private void scoreBoardAnimation() {
         scoreBoard.setVisibility(View.VISIBLE);
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.in_out);
@@ -268,8 +275,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
         buttonList = new ArrayList<>();
         questionAdapter = new ArrayList<>();
 
+        questionAdapter.add(new Question("Who are we A", "testA", "testB", "testC", "testD", "testA", 1));
+        questionAdapter.add(new Question("Who are we B", "testA", "testB", "testC", "testD", "testB", 2));
+        questionAdapter.add(new Question("Who are we C", "testA", "testB", "testC", "testD", "testC", 3));
+        questionAdapter.add(new Question("Who are we D", "testA", "testB", "testC", "testD", "testD", 4));
+        questionAdapter.add(new Question("Who are we C", "testA", "testB", "testC", "testD", "testC", 5));
+
         buttonList = new ArrayList<>(Arrays.asList(btnA, btnB, btnC, btnD));
-        mediaPlayer = mediaPlayer.create(this, R.raw.start);
+        mediaPlayer = MediaPlayer.create(this, R.raw.start);
 
         loadDatabase();
         makeInvisible(true);
@@ -359,10 +372,10 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             } else {
                                 handler.postDelayed(runnableMain, 2500);
                             }
-                        } else {
-                            selectTrue = false;
-                            handler.postDelayed(runnableResult, 1000);
                         }
+                    } else {
+                        selectTrue = false;
+                        handler.postDelayed(runnableResult, 1000);
                     }
                 }
                 break;
@@ -371,7 +384,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     /**
      * Set sound for A,B,C,D answer
-     *
      */
     public void setButtonSound(Button button) {
         if (button.getTag() == btnA) {
@@ -413,7 +425,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     /**
      * Make buttons invisible when chosen answer
-     *
      */
     private void makeButtonEnable(boolean isEnable) {
         if (isEnable) {
@@ -552,22 +563,26 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    /**
+     * Next question
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void loadData() {
         // Remove helper
         if (currentPosition > 1) {
             button.clearAnimation();
         }
-        randomQuestion();
+        // random pick question id
+        pickQuestionByDifficulty();
         while (isPassed(questionId)) {
-            randomQuestion();
+            pickQuestionByDifficulty();
         }
 
         question = questionAdapter.get(questionId);
         answerDataList = new ArrayList<>(Arrays.asList(question.getAnswerA(), question.getAnswerB(),
                 question.getAnswerC(), question.getAnswerD()));
 
-        tvQuestionId.setText("Câu hỏi số " + questionId + ": ");
+        tvQuestionId.setText("Câu hỏi số " + currentPosition + ": ");
         tvQuestion.setText(question.getQuestion());
         btnA.setText(randomAnswer('A'));
         btnB.setText(randomAnswer('B'));
@@ -582,6 +597,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
         countDownTimer("start");
     }
 
+    /**
+     * Shuffle answers
+     */
     private String randomAnswer(char answerPosition) {
         int answerData = random.nextInt(answerDataList.size());
         switch (answerPosition) {
@@ -607,7 +625,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 while (answerData == positionA || answerData == positionB || answerData == positionC) {
                     answerData = random.nextInt(answerDataList.size());
                 }
-                btnD.setBackgroundResource(R.drawable.c);
+                btnD.setBackgroundResource(R.drawable.d);
                 break;
         }
         return answerDataList.get(answerData);
@@ -615,7 +633,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     /**
      * Checking if the question was passed
-     *
+     * This method avoiding duplicate question in a match
      * @return true if passed
      */
     private boolean isPassed(int questionId) {
@@ -626,9 +644,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return false;
     }
 
-    private void randomQuestion() {
+    /**
+     * Pick question with suitable difficult base on current position
+     */
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void pickQuestionByDifficulty() {
         if (currentPosition <= 5) {
-            questionId = random.nextInt(9 + 1);
+//            questionId = random.nextInt(9 + 1);
+            questionId = random.nextInt(4);
+            Question pickQuestion = questionAdapter.stream()
+                    .filter(question -> question.getDifficulty() == 1).findFirst().orElse(null);
         } else if (currentPosition <= 10) {
             questionId = random.nextInt(19 - 10 + 1) + 10;
         } else if (currentPosition <= 14) {

@@ -1,33 +1,25 @@
 package com.example.ailatrieuphu.repository.model;
 
 public class Question {
-    private int id;
     private String question;
     private String answerA;
     private String answerB;
     private String answerC;
     private String answerD;
     private String correctAnswer;
+    private int difficulty;
 
     public Question() {
     }
 
-    public Question(int id, String question, String answerA, String answerB, String answerC, String answerD, String correctAnswer) {
-        this.id = id;
+    public Question(String question, String answerA, String answerB, String answerC, String answerD, String correctAnswer, int difficulty) {
         this.question = question;
         this.answerA = answerA;
         this.answerB = answerB;
         this.answerC = answerC;
         this.answerD = answerD;
         this.correctAnswer = correctAnswer;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.difficulty = difficulty;
     }
 
     public String getQuestion() {
@@ -76,5 +68,13 @@ public class Question {
 
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
     }
 }

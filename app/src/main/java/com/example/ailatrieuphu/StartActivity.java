@@ -31,7 +31,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
     MediaPlayer backgroundMusic, prepareSound;
 
     boolean isMusicOn = true;
-    int volume = 30;
+    int volume = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +44,13 @@ public class StartActivity extends Activity implements View.OnClickListener {
     private void addControls() {
 
         // Construct for controls
-        background = (RelativeLayout) findViewById(R.id.background);
-        confirmFrame = (FrameLayout) findViewById(R.id.confirm_frame);
-        logo = (ImageView) findViewById(R.id.logo);
-        tapToPlay = (ImageView) findViewById(R.id.tap_to_play);
-        btnMusic = (ImageButton) findViewById(R.id.btnMusic);
-        btnOk = (ImageButton) findViewById(R.id.btnOk);
-        btnCancel = (ImageButton) findViewById(R.id.btnCancel);
+        background = findViewById(R.id.background);
+        confirmFrame = findViewById(R.id.confirm_frame);
+        logo = findViewById(R.id.logo);
+        tapToPlay = findViewById(R.id.tap_to_play);
+        btnMusic = findViewById(R.id.btnMusic);
+        btnOk = findViewById(R.id.btnOk);
+        btnCancel = findViewById(R.id.btnCancel);
 
         // Set events
         background.setOnClickListener(this);
@@ -106,7 +106,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
     }
 
     private void switchMusic() {
-        if (isMusicOn) {
+        if (!isMusicOn) {
             // Turn on music in first volume
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, volume);
         } else {

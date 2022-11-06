@@ -1,6 +1,5 @@
 package com.example.ailatrieuphu.repository;
 
-public class QuestionRepository {
-
+public class ContributeQuestionRepository {
 
 }

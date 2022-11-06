@@ -52,7 +52,7 @@ public class CallingDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        String ans = ((MainActivity) activity).correctAnswer;
+        String answer = ((MainActivity) activity).correctAnswer;
         switch (view.getId()) {
             case R.id.call1:
                 call_full.setVisibility(View.VISIBLE);
@@ -75,7 +75,7 @@ public class CallingDialog extends Dialog implements View.OnClickListener {
                 break;
         }
         tv.setVisibility(View.VISIBLE);
-        tv.setText(Html.fromHtml("Tôi nghĩ &quot;" + ans + "&quot; <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+        tv.setText(Html.fromHtml("Tôi nghĩ &quot;" + answer + "&quot; <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
                 "là câu trả lời đúng"));
     }
 }

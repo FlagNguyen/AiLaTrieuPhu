@@ -1,7 +1,5 @@
 package com.example.ailatrieuphu.function.helper;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
@@ -49,6 +47,11 @@ public class AskingDialog extends Dialog implements View.OnClickListener {
         columnC = findViewById(R.id.columnC);
         columnD = findViewById(R.id.columnD);
 
+        tvPercentA = findViewById(R.id.tvPercentA);
+        tvPercentB = findViewById(R.id.tvPercentB);
+        tvPercentC = findViewById(R.id.tvPercentC);
+        tvPercentD = findViewById(R.id.tvPercentD);
+
         random = new Random();
         randomPercent();
 
@@ -76,16 +79,20 @@ public class AskingDialog extends Dialog implements View.OnClickListener {
         }
 
         columnA.getLayoutParams().height = percentA * 500 / 100;
-        tvPercentA.setText(percentA + "%");
+        CharSequence textPercentA = percentA + "%";
+        tvPercentA.setText(textPercentA);
 
         columnB.getLayoutParams().height = percentB * 500 / 100;
-        tvPercentB.setText(percentB + "%");
+        String textPercentB = percentB + "%";
+        tvPercentB.setText(textPercentB);
 
         columnC.getLayoutParams().height = percentC * 500 / 100;
-        tvPercentC.setText(percentC + "%");
+        String textPercentC = percentC + "%";
+        tvPercentC.setText(textPercentC);
 
         columnD.getLayoutParams().height = percentD * 500 / 100;
-        tvPercentD.setText(percentD + "%");
+        String textPercentD = percentD + "%";
+        tvPercentD.setText(textPercentD);
     }
 
     public void randomPercent() {
@@ -95,28 +102,28 @@ public class AskingDialog extends Dialog implements View.OnClickListener {
             if (pos1 == 0 || pos2 == 0) {
                 percentA = 0;
             } else {
-                percentA = random.nextInt(100 + 1);
+                percentA = random.nextInt(100 - 0 + 1) + 0;
             }
             if (pos1 == 1 || pos2 == 1) {
                 percentB = 0;
             } else {
-                percentB = random.nextInt((100 - percentA) + 1);
+                percentB = random.nextInt((100 - percentA) - 0 + 1) + 0;
             }
             if (pos1 == 2 || pos2 == 2) {
                 percentC = 0;
             } else {
-                percentC = random.nextInt((100 - percentA - percentB) + 1);
+                percentC = random.nextInt((100 - percentA - percentB) - 0 + 1) + 0;
             }
             if (pos1 == 3 || pos2 == 3) {
                 percentD = 0;
             } else {
-                percentD = random.nextInt((100 - percentA - percentB - percentC) + 1);
+                percentD = random.nextInt((100 - percentA - percentB - percentC) - 0 + 1) + 0;
             }
         } else {
-            percentA = random.nextInt(100 + 1);
-            percentB = random.nextInt((100 - percentA) + 1);
-            percentC = random.nextInt((100 - percentA - percentB) + 1);
-            percentD = random.nextInt((100 - percentA - percentB - percentA) + 1);
+            percentA = random.nextInt(100 - 0 + 1) + 0;
+            percentB = random.nextInt((100 - percentA) - 0 + 1) + 0;
+            percentC = random.nextInt((100 - percentA - percentB) - 0 + 1) + 0;
+            percentD = random.nextInt((100 - percentA - percentB - percentC) - 0 + 1) + 0;
         }
     }
 
