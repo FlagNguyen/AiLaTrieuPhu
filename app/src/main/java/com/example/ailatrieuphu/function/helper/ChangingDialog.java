@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.ailatrieuphu.MainActivity;
 import com.example.ailatrieuphu.R;
@@ -32,11 +35,12 @@ public class ChangingDialog extends Dialog implements View.OnClickListener {
         btnNo.setOnClickListener(this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnYes:
-                ((MainActivity) activity).loadData();
+                ((MainActivity) activity).loadNextQuestion();
                 ((MainActivity) activity).help4.setBackgroundResource(R.drawable.help4_x);
                 ((MainActivity) activity).help4.setEnabled(false);
                 dismiss();

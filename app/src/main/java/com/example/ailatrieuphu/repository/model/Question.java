@@ -1,6 +1,7 @@
 package com.example.ailatrieuphu.repository.model;
 
 public class Question {
+    private int id;
     private String question;
     private String answerA;
     private String answerB;
@@ -12,7 +13,8 @@ public class Question {
     public Question() {
     }
 
-    public Question(String question, String answerA, String answerB, String answerC, String answerD, String correctAnswer, int difficulty) {
+    public Question(int id, String question, String answerA, String answerB, String answerC, String answerD, String correctAnswer, int difficulty) {
+        this.id = id;
         this.question = question;
         this.answerA = answerA;
         this.answerB = answerB;
@@ -20,6 +22,14 @@ public class Question {
         this.answerD = answerD;
         this.correctAnswer = correctAnswer;
         this.difficulty = difficulty;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getQuestion() {

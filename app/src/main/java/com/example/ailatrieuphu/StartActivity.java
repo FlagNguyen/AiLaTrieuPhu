@@ -31,7 +31,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
     MediaPlayer backgroundMusic, prepareSound;
 
     boolean isMusicOn = true;
-    int volume = 0;
+    int volume = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

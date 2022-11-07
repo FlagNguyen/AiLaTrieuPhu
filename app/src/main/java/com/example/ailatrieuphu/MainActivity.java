@@ -81,7 +81,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             if (questionId == 1)
                 helperAnimation();
 
-            loadData();
+            loadNextQuestion();
             questionAnimation();
             if (currentPosition < 15)
                 mediaManager.play(currentPosition);
@@ -274,12 +274,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         answerDataList = new ArrayList<>();
         buttonList = new ArrayList<>();
         questionAdapter = new ArrayList<>();
-
-        questionAdapter.add(new Question("Who are we A", "testA", "testB", "testC", "testD", "testA", 1));
-        questionAdapter.add(new Question("Who are we B", "testA", "testB", "testC", "testD", "testB", 2));
-        questionAdapter.add(new Question("Who are we C", "testA", "testB", "testC", "testD", "testC", 3));
-        questionAdapter.add(new Question("Who are we D", "testA", "testB", "testC", "testD", "testD", 4));
-        questionAdapter.add(new Question("Who are we C", "testA", "testB", "testC", "testD", "testC", 5));
 
         buttonList = new ArrayList<>(Arrays.asList(btnA, btnB, btnC, btnD));
         mediaPlayer = MediaPlayer.create(this, R.raw.start);
@@ -537,7 +531,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    /**
+     * Load data from database add into questionAdapter List
+     */
     private void loadDatabase() {
+        questionRepository = new QuestionRepository(MainActivity.this);
+        questionRepository.create();
+        questionRepository.open();
+        questionRepository.close();
+        questionAdapter = questionRepository.getData();
+        questionRepository.close();
 
     }
 
@@ -567,7 +570,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
      * Next question
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public void loadData() {
+    public void loadNextQuestion() {
         // Remove helper
         if (currentPosition > 1) {
             button.clearAnimation();
