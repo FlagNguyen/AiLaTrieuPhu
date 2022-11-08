@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.KeyEvent;
@@ -17,6 +18,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.RequiresApi;
 
 public class StartActivity extends Activity implements View.OnClickListener {
 
@@ -31,7 +34,7 @@ public class StartActivity extends Activity implements View.OnClickListener {
     MediaPlayer backgroundMusic, prepareSound;
 
     boolean isMusicOn = true;
-    int volume = 100;
+    int volume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +72,16 @@ public class StartActivity extends Activity implements View.OnClickListener {
         audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         // Get current device's volume
         volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        isMusicOn = volume > 0;
 
         // Access vibration manager
         vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
     }
 
-    // Handle onClick events
+    /**
+     * Handle onClick events
+     */
+    @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -85,14 +92,16 @@ public class StartActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.btnMusic:
                 if (isMusicOn) {
-                    view.setBackgroundResource(R.drawable.sound_on);
                     isMusicOn = false;
                     vibe.vibrate(200);
-                } else {
                     view.setBackgroundResource(R.drawable.sound_off);
+                    switchMusic();
+                } else {
                     isMusicOn = true;
+                    vibe.vibrate(200);
+                    view.setBackgroundResource(R.drawable.sound_on);
+                    switchMusic();
                 }
-                switchMusic();
                 break;
             case R.id.btnCancel:
                 confirmFrame.setVisibility(View.INVISIBLE);
@@ -105,23 +114,29 @@ public class StartActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.P)
     private void switchMusic() {
-        if (!isMusicOn) {
-            // Turn on music in first volume
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, volume);
+        if (isMusicOn) {
+            // Turn on music in default volume
+            volume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) - 10;
         } else {
-            // Set volume to zero (Mute)
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
+            // Set volume to min (Mute)
+            volume = audioManager.getStreamMinVolume(AudioManager.STREAM_MUSIC);
         }
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume, 0);
     }
 
-    // Animation of TapToPlay button
+    /**
+     * Animation of TapToPlay button
+     */
     private void runTapToPlayAnimation() {
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
         logo.startAnimation(animation);
     }
 
-    // Logo Animation
+    /**
+     * Logo Animation
+     */
     public void runLogoAnimation() {
         animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
         logo.startAnimation(animation);
@@ -141,6 +156,9 @@ public class StartActivity extends Activity implements View.OnClickListener {
         backgroundMusic.start();
     }
 
+    /**
+     * pause music and sound as well
+     */
     @Override
     protected void onPause() {
         super.onPause();

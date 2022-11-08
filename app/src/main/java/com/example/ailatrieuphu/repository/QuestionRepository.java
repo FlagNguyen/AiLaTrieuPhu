@@ -72,16 +72,19 @@ public class QuestionRepository extends SQLiteOpenHelper {
         }
     }
 
-    public ArrayList<Question> getData() {
+    public ArrayList<Question> getQuestionBank() {
         sqlDb1 = this.getReadableDatabase();
         ArrayList<Question> questions = new ArrayList<>();
-        Cursor easyQuestionCursor = sqlDb1.rawQuery("SELECT * FROM question WHERE difficulty == 1 LIMIT 5", null);
-        Cursor mediumQuestionCursor = sqlDb1.rawQuery("SELECT * FROM question WHERE difficulty == 2 LIMIT 5", null);
-        Cursor hardQuestionCursor = sqlDb1.rawQuery("SELECT * FROM question WHERE difficulty == 3 LIMIT 5", null);
+        Cursor easyQuestionCursor = sqlDb1.rawQuery("SELECT * FROM question WHERE difficulty == 1 ORDER BY RANDOM() LIMIT 5", null);
+        Cursor mediumQuestionCursor = sqlDb1.rawQuery("SELECT * FROM question WHERE difficulty == 2 ORDER BY RANDOM() LIMIT 5", null);
+        Cursor hardQuestionCursor = sqlDb1.rawQuery("SELECT * FROM question WHERE difficulty == 3 ORDER BY RANDOM() LIMIT 5", null);
 
         questions.addAll(getDataFromQueryCursor(easyQuestionCursor));
         questions.addAll(getDataFromQueryCursor(mediumQuestionCursor));
         questions.addAll(getDataFromQueryCursor(hardQuestionCursor));
+        for(int i = 0; i<questions.size();i++){
+            questions.get(i).setId(i);
+        }
         return questions;
     }
 

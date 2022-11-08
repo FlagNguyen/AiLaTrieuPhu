@@ -50,7 +50,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
     public int currentPosition = 1;
     // Question's position in DB
     public int questionId;
-    public int positionA, positionB, positionC, position1, position2;
+    public int positionA, positionB, positionC, position1, position2, totalCountDownTime;
     public boolean isStarted = false, isDropAnswer = false, selectTrue = false;
 
     public Random random;
@@ -355,7 +355,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 button.setBackgroundResource(R.drawable.selected);
 
                 if (!button.getText().toString().trim().equals("")) {
-                    if (button.getText().toString().trim().equals(correctAnswer)) {
+                    if (button.getText().toString().trim().equalsIgnoreCase(correctAnswer.trim())) {
                         selectTrue = true;
                         currentPosition++;
                         handler.postDelayed(runnableResult, 500);
@@ -504,8 +504,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
      * Count down timer
      */
     public void countDownTimer(String type) {
+        if (currentPosition <= 5) {
+            totalCountDownTime = 31000;
+        } else if (currentPosition <= 10) {
+            totalCountDownTime = 41000;
+        } else if (currentPosition <= 14) {
+            totalCountDownTime = 51000;
+        } else {
+            totalCountDownTime = 61000;
+        }
         if (type.equals("start")) {
-            timer1 = new CountDownTimer(31000, 1000) {
+            timer1 = new CountDownTimer(totalCountDownTime, 1000) {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onTick(long millisUntilFinished) {
@@ -538,10 +547,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         questionRepository = new QuestionRepository(MainActivity.this);
         questionRepository.create();
         questionRepository.open();
+        questionAdapter = questionRepository.getQuestionBank();
         questionRepository.close();
-        questionAdapter = questionRepository.getData();
-        questionRepository.close();
-
     }
 
     private void makeInvisible(boolean isHide) {
@@ -575,13 +582,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (currentPosition > 1) {
             button.clearAnimation();
         }
-        // random pick question id
-        pickQuestionByDifficulty();
-        while (isPassed(questionId)) {
-            pickQuestionByDifficulty();
-        }
 
-        question = questionAdapter.get(questionId);
+        question = questionAdapter.stream().findFirst().get();
         answerDataList = new ArrayList<>(Arrays.asList(question.getAnswerA(), question.getAnswerB(),
                 question.getAnswerC(), question.getAnswerD()));
 
@@ -594,7 +596,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         correctAnswer = question.getCorrectAnswer();
 
         buttonList = new ArrayList<>(Arrays.asList(btnA, btnB, btnC, btnD));
-        passedList.add(questionId);
+        questionAdapter.remove(question);
 
         countDownTimer("stop");
         countDownTimer("start");
@@ -634,44 +636,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return answerDataList.get(answerData);
     }
 
-    /**
-     * Checking if the question was passed
-     * This method avoiding duplicate question in a match
-     * @return true if passed
-     */
-    private boolean isPassed(int questionId) {
-        for (int i = 0; i < passedList.size(); i++) {
-            if (questionId == passedList.get(i))
-                return true;
-        }
-        return false;
-    }
-
-    /**
-     * Pick question with suitable difficult base on current position
-     */
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void pickQuestionByDifficulty() {
-        if (currentPosition <= 5) {
-//            questionId = random.nextInt(9 + 1);
-            questionId = random.nextInt(4);
-            Question pickQuestion = questionAdapter.stream()
-                    .filter(question -> question.getDifficulty() == 1).findFirst().orElse(null);
-        } else if (currentPosition <= 10) {
-            questionId = random.nextInt(19 - 10 + 1) + 10;
-        } else if (currentPosition <= 14) {
-            questionId = random.nextInt(29 - 20 + 1) + 20;
-        } else {
-            questionId = random.nextInt(33 - 30 + 1) + 30;
-        }
-    }
-
     public void dropHalfAnswer() {
         isDropAnswer = true;
         position1 = 0;
         position2 = 0;
-        while (position1 == position2 || (buttonList.get(position1)).getText().toString().equals(correctAnswer)
-                || (buttonList.get(position2)).getText().toString().equals(correctAnswer)) {
+        while (position1 == position2 || (buttonList.get(position1)).getText().toString().equalsIgnoreCase(correctAnswer)
+                || (buttonList.get(position2)).getText().toString().equalsIgnoreCase(correctAnswer)) {
             position1 = random.nextInt(buttonList.size());
             position2 = random.nextInt(buttonList.size());
         }
