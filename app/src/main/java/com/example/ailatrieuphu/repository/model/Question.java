@@ -8,11 +8,12 @@ public class Question {
     private String answerC;
     private String answerD;
     private String correctAnswer;
+    private int difficulty;
 
     public Question() {
     }
 
-    public Question(int id, String question, String answerA, String answerB, String answerC, String answerD, String correctAnswer) {
+    public Question(int id, String question, String answerA, String answerB, String answerC, String answerD, String correctAnswer, int difficulty) {
         this.id = id;
         this.question = question;
         this.answerA = answerA;
@@ -20,6 +21,7 @@ public class Question {
         this.answerC = answerC;
         this.answerD = answerD;
         this.correctAnswer = correctAnswer;
+        this.difficulty = difficulty;
     }
 
     public int getId() {
@@ -76,5 +78,13 @@ public class Question {
 
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
     }
 }

@@ -16,11 +16,6 @@ public class MediaManager {
         this.context = context;
     }
 
-    public void resetMedia() {
-        if (backgroundMusic != null) {
-            backgroundMusic.reset();
-        }
-    }
 
     public void play(int number) {
         switch (number) {
@@ -70,13 +65,18 @@ public class MediaManager {
         }
         if (number == 6) {
             backgroundMusic.reset();
-            backgroundMusic = MediaPlayer.create(context, R.raw.phase1);
+            backgroundMusic = MediaPlayer.create(context, R.raw.phase2);
         }
         if (number == 11) {
             backgroundMusic.reset();
-            backgroundMusic = MediaPlayer.create(context, R.raw.phase1);
+            backgroundMusic = MediaPlayer.create(context, R.raw.phase3);
         }
         backgroundMusic.setLooping(true);
         backgroundMusic.start();
+    }
+
+    public void releaseMedia() {
+        sound.release();
+        backgroundMusic.release();
     }
 }
